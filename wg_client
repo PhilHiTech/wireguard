@@ -747,7 +747,7 @@ if [ "$1" != "disable" ] && [ "$2" != "disable" ];then
         sqlite3 $SQL_DATABASE "INSERT into session values('$WG_INTERFACE','Start','$TIMESTAMP');"   # v1.08
         sqlite3 $SQL_DATABASE "INSERT into traffic values('$WG_INTERFACE','$TIMESTAMP','0','0','0','0');"
 
-        if [ -z "$(iptables-save | grep WGM_ACL)" ];then    # v4.16.3
+        if [ -z "$(iptables -S -v | grep WGM_ACL)" ];then    # v4.16.3
             cmd iptables -N WGM_ACL_F 2>/dev/null           # v4.16.3
             cmd iptables -I FORWARD "$(($(iptables -nvL FORWARD --line -t filter | grep -Em 1 ".*\*.*\*.*state.*ESTABLISHED" | cut -d' ' -f1)+1))" -i wg+ -j WGM_ACL_F -m comment --comment "Wireguard ACL" # v4.16.3
         fi
