@@ -43,8 +43,8 @@ VERSION="v4.19b5"
 # Contributors: odkrys,Torson,ZebMcKayhan,jobhax,elorimer,Sh0cker54,here1310,defung,The Chief,abir1909,JGrana,heysoundude,archiel,Cam,endiz,Meshkoff,johndoe85,Juched,evlo,knatterton
 
 GIT_REPO="wireguard"
-GITHUB_MARTINEAU="https://raw.githubusercontent.com/MartineauUK/$GIT_REPO/main"
-GITHUB_MARTINEAU_DEV="https://raw.githubusercontent.com/MartineauUK/$GIT_REPO/dev"
+GITHUB_MARTINEAU="https://raw.githubusercontent.com/PhilHiTech/$GIT_REPO/main"
+GITHUB_MARTINEAU_DEV="https://raw.githubusercontent.com/PhilHiTech/$GIT_REPO/dev"
 GITHUB_ZEBMCKAYHAN="https://raw.githubusercontent.com/ZebMcKayhan/WireguardManager/main" # v4.15
 GITHUB_ZEBMCKAYHAN_DEV="https://raw.githubusercontent.com/ZebMcKayhan/WireguardManager/dev" # v4.15
 GITHUB_DIR=$GITHUB_MARTINEAU                       # default for script
@@ -559,7 +559,7 @@ Download_Modules() {
     fi
 
     #local WEBFILE_NAMES=$(curl -${SILENT}fL https://www.snbforums.com/threads/experimental-wireguard-for-hnd-platform-4-1-x-kernels.46164/ | grep "<a href=.*odkrys.*wireguard" | grep -oE "wireguard.*" | sed 's/\"//g' | tr '\n' ' ')
-    local WEBFILE_NAMES=$(curl -${SILENT}fL https://api.github.com/repos/odkrys/entware-makefile-for-merlin/git/trees/main | grep "\"path\": \"wireguard-.*\.ipk\"," | cut -d'"' -f 4)  # v4.11 @defung pull request https://github.com/MartineauUK/wireguard/pull/3
+    local WEBFILE_NAMES=$(curl -${SILENT}fL https://api.github.com/repos/odkrys/entware-makefile-for-merlin/git/trees/main | grep "\"path\": \"wireguard-.*\.ipk\"," | cut -d'"' -f 4)  # v4.11 @defung pull request https://github.com/PhilHiTech/wireguard/pull/3
 
     # Allow use of Entware/3rd Party Kernel modules even if included in firmware
     if [ ! -f /usr/sbin/wg ] || [ "$USE_ENTWARE_KERNEL_MODULE" == "Y" ];then
@@ -767,7 +767,7 @@ Check_Module_Versions() {
             local REPOSITORY_TITLE="Wireguard"                                                              # v4.12
         fi
 
-        local FILES=$(curl -${SILENT}fL https://api.github.com/repos/$REPOSITORY_OWNER/$REPOSITORY_TITLE/git/trees/main | grep "\"path\": \"wireguard-.*\.ipk\"," | cut -d'"' -f 4 | tr '\r\n' ' ')  # v4.12 v4.11 @defung pull request  https://github.com/MartineauUK/wireguard/pull/3
+        local FILES=$(curl -${SILENT}fL https://api.github.com/repos/$REPOSITORY_OWNER/$REPOSITORY_TITLE/git/trees/main | grep "\"path\": \"wireguard-.*\.ipk\"," | cut -d'"' -f 4 | tr '\r\n' ' ')  # v4.12 v4.11 @defung pull request  https://github.com/PhilHiTech/wireguard/pull/3
 
         if [ "$ACTION" == "force" ];then                                            # v4.12
             local UPDATES="Y"                                                       # v4.12
@@ -4133,8 +4133,8 @@ Show_Info_HDR() {
 
     local ACTION="$(echo "$menu1"| awk '{print $1}')"
 
-    local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/MartineauUK/wireguard/commits/main/wg_manager.sh$cRESET)"   #v2.01
-    [ -n "$(echo $VERSION | grep "b")" ] && local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/MartineauUK/wireguard/commits/dev/wg_manager.sh$cRESET)" #v2.01
+    local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/PhilHiTech/wireguard/commits/main/wg_manager.sh$cRESET)"   #v2.01
+    [ -n "$(echo $VERSION | grep "b")" ] && local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/PhilHiTech/wireguard/commits/dev/wg_manager.sh$cRESET)" #v2.01
 
     echo -e $cBWHT"\n\tRouter$cBMAG $HARDWARE_MODEL ${cRESET}Firmware ${cBMAG}(v$BUILDNO)"             # v4.12
     if [ -f "$ENTWARE_INFO" ] || [ -f /opt/etc/opkg.conf ];then
@@ -5295,8 +5295,8 @@ Check_Version_Update() {
     local LOCAL_VERSION_NUMDOT=$VERSION                                     # v1.03
     local LOCAL_VERSION_NUM=$(echo $VERSION | sed 's/[^0-9]*//g')
 
-    local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/MartineauUK/${GIT_REPO}/commits/main/wg_manager.sh$cRESET)"
-    [ -n "$(echo $VERSION | grep "b")" ] && local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/MartineauUK/${GIT_REPO}/commits/dev/wg_manager.sh$cRESET)"
+    local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/PhilHiTech/${GIT_REPO}/commits/main/wg_manager.sh$cRESET)"
+    [ -n "$(echo $VERSION | grep "b")" ] && local CHANGELOG="$cRESET(${cBCYA}Change Log: ${cBYEL}https://github.com/PhilHiTech/${GIT_REPO}/commits/dev/wg_manager.sh$cRESET)"
 
     # As the developer, I need to differentiate between the GitHub md5sum hasn't changed, which means I've tweaked it locally
     if [ -n "$REMOTE_VERSION_NUMDOT" ];then
@@ -7337,7 +7337,7 @@ Mount_WebUI(){
             return 1
         fi
 
-        ### locking mechanism code credit to Martineau (@MartineauUK) ###
+        ### locking mechanism code credit to Martineau (@PhilHiTech) ###
         local LOCKFILE=/tmp/addonwebui.lock
         local FD=386
         eval exec "$FD>$LOCKFILE"
@@ -7407,7 +7407,7 @@ Unmount_WebUI(){
 
     local PAGE=$1                                                       # Martineau Hack
 
-    ### locking mechanism code credit to Martineau (@MartineauUK) ###
+    ### locking mechanism code credit to Martineau (@PhilHiTech) ###
     local LOCKFILE=/tmp/addonwebui.lock
     local FD=386
     eval exec "$FD>$LOCKFILE"
