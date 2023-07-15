@@ -485,7 +485,7 @@ if [ "$2" != "disable" ];then
         cmd iptables -I INPUT -i $VPN_ID -j ACCEPT -m comment --comment "WireGuard 'server'"
         #cmd iptables -I FORWARD -o $VPN_ID -j ACCEPT -m comment --comment "WireGuard 'server'"
 
-        if [ -z "$(iptables-save | grep WGM_ACL)" ];then    # v4.16
+        if [ -z "$(iptables -S -v | grep WGM_ACL)" ];then    # v4.16
             cmd iptables -N WGM_ACL_F 2>/dev/null           # v4.16
             cmd iptables -I FORWARD "$(($(iptables -nvL FORWARD --line -t filter | grep -Em 1 ".*\*.*\*.*state.*ESTABLISHED" | cut -d' ' -f1)+1))" -i wg+ -j WGM_ACL_F -m comment --comment "Wireguard ACL"        # v4.16
         fi
@@ -523,7 +523,7 @@ if [ "$2" != "disable" ];then
             cmd ip6tables -I INPUT -p udp --dport $wgport -j ACCEPT -m comment --comment "WireGuard 'server'"
             cmd ip6tables -I INPUT -i $VPN_ID -j ACCEPT -m comment --comment "WireGuard 'server'"
             #cmd ip6tables -I FORWARD -o $VPN_ID -j ACCEPT -m comment --comment "WireGuard 'server'"
-            if [ -z "$(iptables-save | grep WGM_ACL)" ];then    # v4.16.3
+            if [ -z "$(iptables -S -v | grep WGM_ACL)" ];then    # v4.16.3
                 cmd ip6tables -N WGM_ACL_F 2>/dev/null          # v4.16.3
                 cmd ip6tables -I FORWARD "$(($(iptables -nvL FORWARD --line -t filter | grep -Em 1 ".*\*.*\*.*state.*ESTABLISHED" | cut -d' ' -f1)+1))" -i wg2+ -j WGM_ACL_F -m comment --comment "Wireguard ACL"   # v4.16.3
             fi
