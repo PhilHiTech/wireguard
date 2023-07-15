@@ -6743,8 +6743,8 @@ Process_User_Choice() {
                         if [ "$(sqlite3 $SQL_DATABASE "SELECT auto FROM clients WHERE peer='$WG_INTERFACE';")" == "P" ];then
                             if [ -n "$(wg show interfaces | grep -o "$WG_INTERFACE")" ];then    # v4.12
                                 # v4.12 Remove the DNS redirection if it exists .....
-                                local I=$(iptables-save -t nat | grep -m 1 -F "$IP" | grep -o "WGDNS[1-5]" | grep -o "[1-5]")
-                                local DNS=$(iptables-save -t nat | grep -F "$IP" | grep WGDNS | awk '{print $NF}')
+                                local I=$(iptables -S -v -t nat | grep -m 1 -F "$IP" | grep -o "WGDNS[1-5]" | grep -o "[1-5]")
+                                local DNS=$(iptables -S -v -t nat | grep -F "$IP" | grep WGDNS | awk '{print $NF}')
                                 [ -n "$I" ] && iptables -t nat -D WGDNS${I} -s $IP -j DNAT --to-destination $DNS -m comment --comment "WireGuard 'client${I} DNS'"  # v4.12 @ZebMcKayhan
                                 # Remove 'livin' from Policy database
                                 sqlite3 $SQL_DATABASE "DELETE FROM policy WHERE srcip='$IP' AND tag LIKE '%Expat livin%' ;"
@@ -6781,8 +6781,8 @@ Process_User_Choice() {
                     # v4.12 Remove the DNS redirection.....
                     # Remove 'livin' from Policy database
                     sqlite3 $SQL_DATABASE "DELETE FROM policy WHERE srcip='$IP' AND tag LIKE '%Expat livin%' ;"
-                    local DNS=$(iptables-save -t nat | grep -F "$IP" | grep WGDNS | awk '{print $NF}')
-                    local I=$(iptables-save -t nat | grep -m 1 -F "$IP" | grep -o "WGDNS[1-5]" | grep -o "[1-5]")
+                    local DNS=$(iptables -S -v -t nat | grep -F "$IP" | grep WGDNS | awk '{print $NF}')
+                    local I=$(iptables -S -v -t nat | grep -m 1 -F "$IP" | grep -o "WGDNS[1-5]" | grep -o "[1-5]")
                     [ -n "$I" ] && iptables -t nat -D WGDNS${I} -s $IP -j DNAT --to-destination $DNS -m comment --comment "WireGuard 'client${I} DNS'"  # v4.12 @ZebMcKayhan
                     echo -e $cBGRE"\n\t[✔] Welcome home Sir!!!\n"$cRESET
                 fi
