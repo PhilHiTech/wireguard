@@ -495,9 +495,6 @@ download_file() {
             martineau)
                 [ "$GITHUB_BRANCH" != "dev" ] && GITHUB_DIR=$GITHUB_MARTINEAU || GITHUB_DIR=$GITHUB_MARTINEAU_DEV
             ;;
-            zebmckayhan)
-                [ "$GITHUB_BRANCH" != "dev" ] && GITHUB_DIR=$GITHUB_ZEBMCKAYHAN || GITHUB_DIR=$GITHUB_ZEBMCKAYHAN_DEV
-            ;;
         esac
 
         [ "$GITHUB_BRANCH" == "dev" ] && local DEVTXT=${cRESET}$cWRED"Github 'dev/development' branch"$cRESET || local DEVTXT=
