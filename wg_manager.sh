@@ -5277,7 +5277,7 @@ Diag_Rules() {
 # shellcheck disable=SC2120
 Check_Version_Update() {
 
-    GITHUB_DIR=$GITHUB_MARTINEAU
+    GITHUB_DIR=$GITHUB_MARTINEAU_DEV
 
     local localmd5="$(md5sum "$0" | awk '{print $1}')"
 
