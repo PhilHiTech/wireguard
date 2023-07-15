@@ -493,7 +493,10 @@ download_file() {
 
         case $GITHUB in
             martineau)
-                [ "$GITHUB_BRANCH" != "dev" ] && GITHUB_DIR=$GITHUB_MARTINEAU || GITHUB_DIR=$GITHUB_MARTINEAU_DEV
+                [ "$GITHUB_BRANCH" != "dev" ] && GITHUB_DIR=$GITHUB_MARTINEAU_DEV
+            ;;
+            zebmckayhan)
+                [ "$GITHUB_BRANCH" != "dev" ] && GITHUB_DIR=$GITHUB_ZEBMCKAYHAN || GITHUB_DIR=$GITHUB_ZEBMCKAYHAN_DEV
             ;;
         esac
 
